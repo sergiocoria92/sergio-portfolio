@@ -1,174 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Mini Snake Game</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background-color: #f4f4f4;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sergio Coria Maya</title>
+    <link rel="icon" type="image/png" href="images/favicon.png">
+    <link rel=stylesheet href="styles/index.css">
 
-    .wrapper {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center; /* centra vertical */
-      align-items: center;     /* centra horizontal */
-      text-align: center;
-    }
-
-    h1 {
-      margin-bottom: 5px;
-    }
-
-    p {
-      margin-top: 5px;
-      margin-bottom: 10px;
-    }
-
-    #game {
-      border: 2px solid #333;
-      display: block;
-      margin-top: 20px;
-    }
-  </style>
 </head>
+
 <body>
-  <div class="wrapper">
-    <h1>🚧Page under construction 🚧</h1>
-    <p><strong>Mini Snake Game 🐍 </strong> – play a quick game while you visit.</p>
-    <p>Use the arrow keys on your keyboard to move the snake.</p>
+    <div id="container">
+        <header>
+            <nav>
+                <ul>
+                    <li><a href="pages/index.html">home</a></li>
+                    <li><a href="pages/resume.html">resume</a></li>
+                    <li><a href="pages/projects.html">projects</a></li>
+                    <li><a href="pages/pictures.html">pictures</a></li>
+                    <li><a href="pages/contact.html">contact</a></li>
+                </ul>
 
-    <canvas id="game" width="400" height="400"></canvas>
-  </div>
+            </nav>
 
-  <script>
-    const canvas = document.getElementById("game");
-    const ctx = canvas.getContext("2d");
+        </header>
 
-    const tileSize = 20;
-    const tileCount = canvas.width / tileSize;
+        <main>
+            <div class = "container1">
+            <h2>about me</h2>
+            <img src="images/sergio_coria.jpeg" alt="Sergio Coria Maya" class="about-me-image">
+            </div>
 
-    let snake = [{ x: 10, y: 10 }];
-    let vx = 0;
-    let vy = 0;
-    let food = { x: 5, y: 5 };
-    let gameOver = false;
 
-    document.addEventListener("keydown", (e) => {
-      switch (e.key) {
-        case "ArrowLeft":
-          if (vx !== 1) { vx = -1; vy = 0; }
-          break;
-        case "ArrowRight":
-          if (vx !== -1) { vx = 1; vy = 0; }
-          break;
-        case "ArrowUp":
-          if (vy !== 1) { vx = 0; vy = -1; }
-          break;
-        case "ArrowDown":
-          if (vy !== -1) { vx = 0; vy = 1; }
-          break;
-      }
-    });
 
-    function randomFood() {
-      return {
-        x: Math.floor(Math.random() * tileCount),
-        y: Math.floor(Math.random() * tileCount),
-      };
-    }
+        </main>
 
-    function gameLoop() {
-      if (gameOver) {
-        drawGameOver();
-        return;
-      }
+        <footer>
+            <p>© 2025 Sergio Coria Maya</p>
 
-      update();
-      draw();
-      setTimeout(gameLoop, 100); // speed
-    }
+        </footer>
 
-    function update() {
-      const head = { x: snake[0].x + vx, y: snake[0].y + vy };
+    </div>
 
-      // if not moving yet, do nothing
-      if (vx === 0 && vy === 0) return;
-
-      // wall collision
-      if (
-        head.x < 0 || head.x >= tileCount ||
-        head.y < 0 || head.y >= tileCount
-      ) {
-        gameOver = true;
-        return;
-      }
-
-      // self collision
-      for (let i = 0; i < snake.length; i++) {
-        if (snake[i].x === head.x && snake[i].y === head.y) {
-          gameOver = true;
-          return;
-        }
-      }
-
-      snake.unshift(head); // new head
-
-      // eat food
-      if (head.x === food.x && head.y === food.y) {
-        food = randomFood();
-      } else {
-        snake.pop(); // remove tail
-      }
-    }
-
-    function draw() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-      // background
-      ctx.fillStyle = "#111";
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-      // snake
-      ctx.fillStyle = "#0f0";
-      snake.forEach((part) => {
-        ctx.fillRect(
-          part.x * tileSize,
-          part.y * tileSize,
-          tileSize - 1,
-          tileSize - 1
-        );
-      });
-
-      // food
-      ctx.fillStyle = "#f00";
-      ctx.fillRect(
-        food.x * tileSize,
-        food.y * tileSize,
-        tileSize - 1,
-        tileSize - 1
-      );
-    }
-
-    function drawGameOver() {
-      ctx.fillStyle = "rgba(0,0,0,0.7)";
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-      ctx.fillStyle = "#fff";
-      ctx.font = "24px Arial";
-      ctx.textAlign = "center";
-      ctx.fillText("Game Over", canvas.width / 2, canvas.height / 2);
-      ctx.font = "16px Arial";
-      ctx.fillText(
-        "Refresh the page to play again",
-        canvas.width / 2,
-        canvas.height / 2 + 30
-      );
-    }
-
-    gameLoop();
-  </script>
+    
 </body>
 </html>
